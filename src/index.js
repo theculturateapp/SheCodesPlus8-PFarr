@@ -9,13 +9,14 @@ function refreshWeather(response) {
   let date = new Date(response.data.time * 1000);
   let iconElement = document.querySelector("#icon");
 
-  iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class = "weather-app-icon">`;
   cityElement.innerHTML = response.data.city;
   timeElement.innerHTML = formatDate(date);
   descriptionElement.innerHTML = response.data.condition.description;
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
   temperatureElement.innerHTML = Math.round(temperature);
+  iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class = "weather-app-icon">`;
+  getForecast(response.data.city);
 }
 
 function formatDate(date) {
@@ -30,6 +31,7 @@ function formatDate(date) {
     "Friday",
     "Saturday",
   ];
+
   let day = days[date.getDay()];
 
   if (minutes < 10) {
@@ -52,40 +54,41 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
-function getForecast(city) {
+function getForecast (city) {
   let apiKey = "37674b4ao471bb32b44ta37b064ef2da";
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=imperial`;
-  console.log(apiUrl)
+  axios.get(apiUrl).then(displayForecast);
 }
 
-function displayForecast(){
-  let days = ["Tues", "Wed", "Thurs", "Fri", "Sat"];
-  let forecastHtml = "";
+function displayForecast(response) {
+  console.log(response.data);
   
-  days.forEach(function (day){
-    forecastHtml=
-      forecastHtml+
-      `
+  let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
+  let forecastHtml = "";
+
+days.forEach(function (day) {
+  forecastHtml =
+    forecastHtml +
+    `
       <div class="weather-forecast-day">
         <div class="weather-forecast-date">${day}</div>
-        <div class="weather-forecast-icon">⛅️</div>
+        <div class="weather-forecast-icon">🌤️</div>
         <div class="weather-forecast-temperatures">
           <div class="weather-forecast-temperature">
-            <strong>45°F</strong>
+            <strong>15º</strong>
           </div>
-          <div class="weather-forecast-temperature">38°F</div>
+          <div class="weather-forecast-temperature">9º</div>
         </div>
       </div>
     `;
-  });
+});
 
-let forecast = document.querySelector("#forecast");
-forecastElement.innerHTML = forecastHtml;
+  let forecast = document.querySelector("#forecast");
+  forecastElement.innerHTML = forecastHtml;
 }
 
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
 searchCity("Atlanta");
-displayForecast()
 
