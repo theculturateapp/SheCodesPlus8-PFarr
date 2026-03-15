@@ -39,19 +39,46 @@ function formatDate(date) {
 
   return `${day} ${hours}:${minutes}`;
 }
-
 function searchCity(city) {
   let apiKey = "37674b4ao471bb32b44ta37b064ef2da";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`;
   axios.get(apiUrl).then(refreshWeather);
 }
-
 function handleSearchSubmit(event) {
   event.preventDefault();
   let searchInput = document.querySelector("#search-form-input");
 
+  
   searchCity(searchInput.value);
+}
+
+function displayForecast(){
+  let days = ["Tues", "Wed", "Thurs", "Fri", "Sat"];
+  let forecastHtml = "";
+  
+  days.forEach(function (day){
+    forecastHtml=
+      forecastHtml+
+      `
+      <div class="weather-forecast-day">
+        <div class="weather-forecast-date">${day}</div>
+        <div class="weather-forecast-icon">⛅️</div>
+        <div class="weather-forecast-temperatures">
+          <div class="weather-forecast-temperature">
+            <strong>45°F</strong>
+          </div>
+          <div class="weather-forecast-temperature">38°F</div>
+        </div>
+      </div>
+    `;
+  });
+
+let forecast = document.querySelector("#forecast");
+forecastElement.innerHTML = forecastHtml
 }
 
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
+
+searchCity("Atlanta");
+displayForecast()
