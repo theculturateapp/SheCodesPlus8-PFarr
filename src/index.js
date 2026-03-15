@@ -83,7 +83,7 @@ days.forEach(function (day) {
     `;
 });
 
-  let forecast = document.querySelector("#forecast");
+  let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = forecastHtml;
 }
 
