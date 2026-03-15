@@ -29,7 +29,6 @@ function formatDate(date) {
     "Thursday",
     "Friday",
     "Saturday",
-    "Sunday",
   ];
   let day = days[date.getDay()];
 
@@ -39,16 +38,17 @@ function formatDate(date) {
 
   return `${day} ${hours}:${minutes}`;
 }
+
 function searchCity(city) {
   let apiKey = "37674b4ao471bb32b44ta37b064ef2da";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`;
   axios.get(apiUrl).then(refreshWeather);
 }
+
 function handleSearchSubmit(event) {
   event.preventDefault();
   let searchInput = document.querySelector("#search-form-input");
 
-  
   searchCity(searchInput.value);
 }
 
@@ -74,7 +74,7 @@ function displayForecast(){
   });
 
 let forecast = document.querySelector("#forecast");
-forecastElement.innerHTML = forecastHtml
+forecastElement.innerHTML = forecastHtml;
 }
 
 let searchFormElement = document.querySelector("#search-form");
