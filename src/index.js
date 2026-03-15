@@ -52,6 +52,12 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
+function getForecast(city) {
+  let apiKey = "37674b4ao471bb32b44ta37b064ef2da";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=imperial`;
+  console.log(apiUrl)
+}
+
 function displayForecast(){
   let days = ["Tues", "Wed", "Thurs", "Fri", "Sat"];
   let forecastHtml = "";
@@ -82,3 +88,4 @@ searchFormElement.addEventListener("submit", handleSearchSubmit);
 
 searchCity("Atlanta");
 displayForecast()
+
